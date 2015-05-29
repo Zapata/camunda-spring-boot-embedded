@@ -4,22 +4,22 @@
     <startEvent id="StartEvent_1" name="Loan Request &#xD;&#xA;Received">
       <outgoing>SequenceFlow_1</outgoing>
     </startEvent>
-    <sequenceFlow id="SequenceFlow_1" name="" isImmediate="true" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
+    <sequenceFlow id="SequenceFlow_1" name="" isImmediate="true" sourceRef="StartEvent_1" targetRef="calculateInterest"/>
     <endEvent id="EndEvent_1" name="Loan Approved">
       <incoming>SequenceFlow_3</incoming>
     </endEvent>
-    <serviceTask id="ServiceTask_1" activiti:delegateExpression="${calculateInterestService}" name="Calculate Interest" implementation="webService">
+    <serviceTask id="calculateInterest" activiti:expression="${calculateInterestService.compute()}" name="Calculate Interest" implementation="webService">
       <incoming>SequenceFlow_1</incoming>
       <outgoing>SequenceFlow_3</outgoing>
     </serviceTask>
-    <sequenceFlow id="SequenceFlow_3" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
+    <sequenceFlow id="SequenceFlow_3" name="" sourceRef="calculateInterest" targetRef="EndEvent_1"/>
   </process>
   <bpmndi:BPMNDiagram id="sid-f15b242e-a4de-4e11-9a92-f98871e78f0b">
     <bpmndi:BPMNPlane id="sid-cfb7eb13-6635-4f62-a650-e714a1f1ba82" bpmnElement="loanApproval">
       <bpmndi:BPMNShape id="StartEvent_1_gui" bpmnElement="StartEvent_1">
         <omgdc:Bounds height="30.0" width="30.0" x="117.0" y="228.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_1_gui" bpmnElement="ServiceTask_1">
+      <bpmndi:BPMNShape id="ServiceTask_1_gui" bpmnElement="calculateInterest">
         <omgdc:Bounds height="80.0" width="100.0" x="216.0" y="202.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1_gui" bpmnElement="EndEvent_1">

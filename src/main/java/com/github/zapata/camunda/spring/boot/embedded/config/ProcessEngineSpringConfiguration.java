@@ -2,6 +2,7 @@ package com.github.zapata.camunda.spring.boot.embedded.config;
 
 import java.io.IOException;
 
+import javax.inject.Inject;
 import javax.sql.DataSource;
 
 import org.camunda.bpm.engine.AuthorizationService;
@@ -17,7 +18,6 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -26,13 +26,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 @Configuration
 public class ProcessEngineSpringConfiguration {
 
-	@Autowired
+	@Inject
 	private DataSource dataSource;
 
-	@Autowired
+	@Inject
 	private PlatformTransactionManager transactionManager;
 
-	@Autowired
+	@Inject
 	private ResourcePatternResolver resourceResolver;
 
 	@Bean

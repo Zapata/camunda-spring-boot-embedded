@@ -1,0 +1,79 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.3.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+    configurations {
+        compile.exclude module: "spring-boot-starter-tomcat"
+       	compile.exclude module: "tomcat-jdbc"
+    }
+}
+
+
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'camunda-spring-boot-embedded'
+    version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+	
+	maven {
+		name 'Camunda Repository'
+		url 'https://app.camunda.com/nexus/content/groups/public'
+	}
+
+}
+
+dependencies {
+	def camundaVersion = '7.2.0'
+	
+	
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-jersey")
+    compile("org.springframework.boot:spring-boot-starter-undertow")
+    compile("org.springframework.boot:spring-boot-starter-jdbc")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+    //compile("org.springframework.plugin:spring-plugin-core:1.1.0.RELEASE")
+
+	// Camunda
+    // 7.2.0 not working at least because of: CAM-3174, CAM-3167.
+	compile("org.camunda.bpm:camunda-engine:7.3.0-alpha1") {
+		exclude group: 'org.apache.commons', module: 'commons-email'
+	}
+	compile("org.camunda.bpm:camunda-engine-spring:$camundaVersion")
+	compile("org.camunda.bpm:camunda-engine-rest:$camundaVersion:classes")
+	compile("org.camunda.bpm.webapp:camunda-webapp:$camundaVersion:classes")
+	compile("org.camunda.spin:camunda-spin-core:1.0.1")
+	compile("org.camunda.spin:camunda-spin-dataformat-json-jackson:1.0.1")
+	compile("org.camunda.bpm:camunda-engine-plugin-spin:$camundaVersion")
+	compile("org.camunda.bpm.identity:camunda-identity-ldap:$camundaVersion")
+
+	// Database
+	compile("com.h2database:h2:1.3.175")
+	compile("com.zaxxer:HikariCP-java6:2.2.5")
+	
+    // Utilities
+    compile("com.google.guava:guava:18.0")
+    // AssertJ
+    testCompile("org.assertj:assertj-core:1.7.0")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+	testCompile("com.jayway.restassured:rest-assured:2.3.1")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
