@@ -2,3 +2,6 @@ server:
   port: 9080
 management:
   port: 9081
+http:
+  mappers:
+    jsonPrettyPrint: true

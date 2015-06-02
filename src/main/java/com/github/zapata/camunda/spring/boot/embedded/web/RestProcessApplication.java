@@ -1,4 +1,4 @@
-package com.github.zapata.camunda.spring.boot.embedded.rest;
+package com.github.zapata.camunda.spring.boot.embedded.web;
 
 import org.camunda.bpm.application.ProcessApplication;
 import org.camunda.bpm.engine.spring.application.SpringServletProcessApplication;

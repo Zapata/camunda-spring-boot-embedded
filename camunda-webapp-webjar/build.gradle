@@ -1,0 +1,40 @@
+dependencies { compile("org.camunda.bpm.webapp:camunda-webapp:$camundaVersion@war") }
+
+def generatedResourcesFolder = "src/main/webapp/resources"
+
+sourceSets {
+	main {
+		resources { srcDirs += generatedResourcesFolder }
+	}
+}
+
+task generateWebappResources(type: Copy) {
+	description 'Extract webapp files from camunda WAR.'
+	from(zipTree(configurations.compile.singleFile)) {
+		exclude 'META-INF/**'
+		exclude 'WEB-INF/**'
+		include '**'
+	}
+	
+	from({ zipTree(configurations.compile.singleFile) }) {
+		include 'WEB-INF/securityFilterRules.json'
+	}
+	
+	into generatedResourcesFolder
+	
+	doLast {
+		file(generatedResourcesFolder + '/WEB-INF/securityFilterRules.json').renameTo(file(generatedResourcesFolder + '/securityFilterRules.json'))
+		file(generatedResourcesFolder + '/WEB-INF').deleteDir()
+	}
+}
+
+processResources.dependsOn(generateWebappResources)
+
+clean {
+	delete generatedResourcesFolder
+}
+
+jar {
+	baseName = 'camunda-webapp-webjar'
+	version = project.ext.camundaVersion
+}

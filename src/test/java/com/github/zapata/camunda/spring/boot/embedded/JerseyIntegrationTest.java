@@ -8,8 +8,8 @@ public class JerseyIntegrationTest extends AbstractIntegrationTest {
 
 	@Test
 	public void shouldGetHealthStatus() {
-		noAuth().get("/sample").then().assertThat().statusCode(200)
-				.body("status.code", equalTo("UP")).and()
-				.body("status.description", equalTo("Jersey: Up and Running!"));
+		noAuth().get("/api/sample").then().assertThat().statusCode(200)
+				.body("status", equalTo("UP")).and()
+				.body("description", equalTo("Jersey: Up and Running!"));
 	}
 }

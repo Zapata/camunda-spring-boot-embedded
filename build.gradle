@@ -1,12 +1,34 @@
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'idea'
+	apply plugin: 'eclipse'
+
+	project.sourceCompatibility = 1.7
+	project.targetCompatibility = 1.7
+
+	group = 'com.github.zapata'
+	version = '0.0.1-SNAPSHOT'
+	
+	repositories {
+		mavenCentral()
+		
+		maven {
+			name 'Camunda Repository'
+			url 'https://app.camunda.com/nexus/content/groups/public'
+		}
+	}
+	
+	project.ext.camundaVersion = '7.2.0'
+}
+
+
 buildscript {
-    ext {
-        springBootVersion = '1.2.3.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
+	repositories {
+		mavenCentral()
+	}
+	
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.3.RELEASE")
     }
     configurations {
         compile.exclude module: "spring-boot-starter-tomcat"
@@ -14,33 +36,14 @@ buildscript {
     }
 }
 
-
-
-apply plugin: 'java'
-apply plugin: 'groovy'
 apply plugin: 'spring-boot'
 
 jar {
     baseName = 'camunda-spring-boot-embedded'
     version = '0.0.1-SNAPSHOT'
 }
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
-repositories {
-    mavenCentral()
-	
-	maven {
-		name 'Camunda Repository'
-		url 'https://app.camunda.com/nexus/content/groups/public'
-	}
-
-}
 
 dependencies {
-	def camundaVersion = '7.2.0'
-	
-	
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-jersey")
     compile("org.springframework.boot:spring-boot-starter-undertow")
@@ -57,14 +60,12 @@ dependencies {
 	compile("org.camunda.bpm:camunda-engine-spring:$camundaVersion")
 	compile("org.camunda.bpm:camunda-engine-rest:$camundaVersion:classes")
 	compile("org.camunda.bpm.webapp:camunda-webapp:$camundaVersion:classes")
-	compile("org.camunda.spin:camunda-spin-core:1.0.1")
-	compile("org.camunda.spin:camunda-spin-dataformat-json-jackson:1.0.1")
-	compile("org.camunda.bpm:camunda-engine-plugin-spin:$camundaVersion")
-	compile("org.camunda.bpm.identity:camunda-identity-ldap:$camundaVersion")
+	compile project(":camunda-webapp-webjar")
+	
 
 	// Database
 	compile("com.h2database:h2:1.3.175")
-	compile("com.zaxxer:HikariCP-java6:2.2.5")
+	compile("com.zaxxer:HikariCP-java6")
 	
     // Utilities
     compile("com.google.guava:guava:18.0")

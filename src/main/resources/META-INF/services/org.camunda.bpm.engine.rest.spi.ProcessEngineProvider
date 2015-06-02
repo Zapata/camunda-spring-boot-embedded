@@ -1,1 +1,1 @@
-com.github.zapata.camunda.spring.boot.embedded.rest.RestProcessEngineProvider
+com.github.zapata.camunda.spring.boot.embedded.web.RestProcessEngineProvider
