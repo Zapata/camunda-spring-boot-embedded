@@ -9,9 +9,6 @@ A demo embedded application for a Camunda (rest + cockpit/tasklist) integrated w
 - Configure gradle correctly (include boot, and exclude tomcat)
 - Configure a `ResourceConfig`
 - Implement your resource: `SampleResource`
-
-Bonus:
- - Add actuator.
  
 # Camunda integration:
 
@@ -37,7 +34,14 @@ Bonus:
 
 - Use [REST-assured](https://code.google.com/p/rest-assured/) coz it rocks!
 
-# Incomming:
+# Production ready:
 
-- Add metrics and jolokia
+ - Add Spring boot actuator.
+ - Configure Dropwizard metrics.
+ - Expose JMX as HTTP with jolokia.
+
+## What's next?
+
+- API documentation with swagger.
 - Multi project workflow architecture
+

@@ -2,6 +2,8 @@ server:
   port: 9080
 management:
   port: 9081
-http:
-  mappers:
-    jsonPrettyPrint: true
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true 
+      ORDER_MAP_ENTRIES_BY_KEYS: true
